@@ -86,10 +86,14 @@ jobs:
     - name: Display Buildozer version
       run: buildozer --version
       
-    - name: Build Debug APK
+    - name: Fix libffi LT_SYS_SYMBOL_USCORE stub
       run: |
-        export AUTOCONF="autoconf -Wno-syntax"
-        buildozer android debug
+        # libtool 2.4.7 removed LT_SYS_SYMBOL_USCORE; libffi's configure.ac still references it.
+        # Provide a stub so autoconf doesn't fail on undefined macro.
+        echo 'AC_DEFUN([LT_SYS_SYMBOL_USCORE], [])' | sudo tee /usr/share/aclocal/lt_sys_symbol.m4
+        
+    - name: Build Debug APK
+      run: buildozer android debug
         
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
