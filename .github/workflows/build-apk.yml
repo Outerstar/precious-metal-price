@@ -88,6 +88,7 @@ jobs:
       
     - name: Build Debug APK
       run: |
+        export AUTOCONF="autoconf -Wno-syntax"
         buildozer android debug
         
     - name: Upload APK artifact
