@@ -30,8 +30,7 @@ android.api = 33
 # (int) 最低API
 android.minapi = 21
 
-# (str) Android SDK版本
-android.sdk = 33
+# (str) Android SDK版本 (deprecated, use ANDROID_SDK_ROOT env)
 
 # (str) NDK版本
 android.ndk = 25b

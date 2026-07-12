@@ -58,15 +58,25 @@ jobs:
         python -m pip install --upgrade pip
         pip install buildozer==1.6.0 cython==0.29.37 pexpect
         
+    - name: Install Android SDK Build Tools (aidl)
+      run: |
+        # Download Android command-line tools
+        mkdir -p ${{ runner.temp }}/android-sdk/cmdline-tools
+        cd ${{ runner.temp }}
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+        unzip -q commandlinetools-linux-11076708_latest.zip -d android-sdk/cmdline-tools
+        mv android-sdk/cmdline-tools/cmdline-tools android-sdk/cmdline-tools/latest
+        export ANDROID_SDK_ROOT=${{ runner.temp }}/android-sdk
+        # Accept licenses and install build-tools (contains aidl)
+        yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "build-tools;33.0.3" "platforms;android-33"
+        echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+        
     - name: Display Buildozer version
       run: buildozer --version
       
     - name: Build Debug APK
       run: |
         buildozer android debug
-      env:
-        ANDROID_HOME: /tmp/android-sdk
-        ANDROID_NDK_HOME: /tmp/android-ndk
         
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
