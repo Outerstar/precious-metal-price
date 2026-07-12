@@ -32,6 +32,12 @@ android.minapi = 21
 
 # (str) Android SDK版本 (deprecated, use ANDROID_SDK_ROOT env)
 
+# (bool) 跳过SDK自动下载，使用系统安装的SDK
+android.skip_update = True
+
+# (bool) 接受SDK许可协议
+android.accept_sdk_license = True
+
 # (str) NDK版本
 android.ndk = 25b
 
