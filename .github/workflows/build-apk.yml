@@ -71,6 +71,10 @@ jobs:
         # Accept licenses & install build-tools + platform
         yes | $SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_ROOT "build-tools;33.0.3" "platforms;android-33" "ndk;25.2.9519653"
         
+        # Create symlink for legacy tools/bin path (Buildozer expects this)
+        mkdir -p $SDK_ROOT/tools/bin
+        ln -s $SDK_ROOT/cmdline-tools/latest/bin/sdkmanager $SDK_ROOT/tools/bin/sdkmanager
+        
         # Verify aidl exists
         ls -la $SDK_ROOT/build-tools/33.0.3/aidl
         
