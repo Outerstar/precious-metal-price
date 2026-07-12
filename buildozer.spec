@@ -1,5 +1,8 @@
 [app]
 
+# (str) 版本号
+version = 1.0
+
 # (str) 应用标题
 title = 贵金属实时价格
 
